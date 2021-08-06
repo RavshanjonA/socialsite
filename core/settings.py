@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     #package
     'bootstrap4',
 
-    #project
+    #apps
     'account',
+    'group',
+    'post',
 ]
 
 MIDDLEWARE = [
