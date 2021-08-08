@@ -4,56 +4,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} Title {% endblock %} </title>
+    <title>{% block title %} Social Site {% endblock %} </title>
 
     <!--    bootstrap css   -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--    bootstarp theme-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!--    #google api-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!--    boostrap js-->
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <!-- Latest compiled and minified JavaScript -->
+   <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+   <script src="{% static 'core/js/jquery.js' %}"></script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'core/css/master.css'%}">
 
 </head>
 <body>
 <nav class="navbar  mynav" role="navigation" id="navbar">
     <div class="container">
-        <a href="{% url 'home' %}" class="navbar-brand mynav"> Star Scial </a>
-        <ul class="nav navbar-nav navbar-left">
+
+        <a class="navbar-brand mynav" href="{% url 'home' %}">Space Social</a>
+
+        <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a href="#">Post</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Create Group</a></li>
-            <li><a href="{% url 'account:logout' %}">Logout</a></li>
+            <li><a href="{% url 'post:create' %}" class="btn btn-simple">Post</a></li>
+            <li><a href="{% url 'group:all' %}" class="btn btn-simple">Groups</a></li>
+            <li><a href="{% url 'group:create' %}" class="btn btn-simple">Create Group</a></li>
+            <li><a href="{% url 'account:logout' %}" class="btn btn-simple">Log out</a></li>
             {% else %}
-            <li><a href="#">Groups</a></li>
-            <li><a href="{% url  'account:login' %}">Log in</a></li>
-            <li><a href="{% url  'account:signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'group:all' %}" class="btn btn-simple">Groups</a></li>
+            <li><a href="{% url 'account:login' %}" class="btn btn-simple">Log in</a></li>
+            <li><a href="{% url 'account:signup' %}" class="btn btn-simple">Sign up</a></li>
             {% endif %}
         </ul>
+
+
     </div>
 </nav>
 <div class="container mycontent">
     {% block content %}
     {% endblock %}
 </div>
+<script src="{% static 'core/js/master.js'%}" type="text/javascript" ></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
-<!--            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
-<!--            crossorigin="anonymous"></script>-->
+
 </body>
 </html>
