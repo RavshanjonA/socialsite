@@ -1,9 +1,7 @@
-from braces.views import SelectRelatedMixin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import Http404
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
@@ -11,9 +9,10 @@ from post.models import Post
 
 User = get_user_model()
 
-class PostList(ListView, SelectRelatedMixin):
+class PostList(ListView):
     model = Post
     select_related = ('user','group')
+
 
 
 class UserPost(ListView):
@@ -35,7 +34,7 @@ class UserPost(ListView):
         context["post_user"] = self.post_user
         return context
 
-class PostDetail(DetailView, SelectRelatedMixin):
+class PostDetail(DetailView):
     model = Post
     select_related = ('user','group')
 
@@ -43,7 +42,7 @@ class PostDetail(DetailView, SelectRelatedMixin):
         queryset = super().get_queryset()
         return queryset.filter(user__username__iexact = self.kwargs.get('username'))
 
-class CreatePost(SelectRelatedMixin,LoginRequiredMixin,CreateView):
+class CreatePost(LoginRequiredMixin,CreateView):
     fields = ('message','group')
     model = Post
 
@@ -51,7 +50,7 @@ class CreatePost(SelectRelatedMixin,LoginRequiredMixin,CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class DeletePost(SelectRelatedMixin,LoginRequiredMixin,DeleteView):
+class DeletePost(LoginRequiredMixin,DeleteView):
     model = Post
     select_related = ('user','group')
     success_url = reverse_lazy('post:all')
