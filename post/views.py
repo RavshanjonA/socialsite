@@ -1,3 +1,4 @@
+from braces.views import SelectRelatedMixin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -9,7 +10,7 @@ from post.models import Post
 
 User = get_user_model()
 
-class PostList(ListView):
+class PostList(ListView, SelectRelatedMixin):
     model = Post
     select_related = ('user','group')
 
@@ -34,7 +35,7 @@ class UserPost(ListView):
         context["post_user"] = self.post_user
         return context
 
-class PostDetail(DetailView):
+class PostDetail(DetailView,SelectRelatedMixin):
     model = Post
     select_related = ('user','group')
 
@@ -50,7 +51,7 @@ class CreatePost(LoginRequiredMixin,CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class DeletePost(LoginRequiredMixin,DeleteView):
+class DeletePost(LoginRequiredMixin,DeleteView, SelectRelatedMixin):
     model = Post
     select_related = ('user','group')
     success_url = reverse_lazy('post:all')
